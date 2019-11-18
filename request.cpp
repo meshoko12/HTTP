@@ -1,4 +1,4 @@
-#include<iostream>
+
 #include<string>
 #include <stdlib.h>
 #include <iostream>
@@ -28,11 +28,67 @@ std::istringstream resp(s);
     }
   }
 
-  for(auto& kv: m) {
-    std::cout << "KEY: `" << kv.first << "`, VALUE: `" << kv.second << '`' << std::endl;
-  }
+
 }
-};
+void add_header(string header ,string value){
+
+  map<string,string>::iterator it =m.find(header);
+  if(it !=m.end()){
+  if(it->first=="Content-Length" ) it->second=value;
+  else
+
+  it->second=it->second+','+ value;
+
+}
+  else{
+    m.insert(std::make_pair(
+      boost::algorithm::trim_copy(header),
+      boost::algorithm::trim_copy(value)
+    ));
+
+  }
+
+}
+void add_header(string header ,string value){
+
+  map<string,string>::iterator it =m.find(header);
+  if(it !=m.end()){
+  if(it->first=="Content-Length" ) it->second=value;
+  else
+
+  it->second=it->second+','+ value;
+
+}
+  else{
+    m.insert(std::make_pair(
+      boost::algorithm::trim_copy(header),
+      boost::algorithm::trim_copy(value)
+    ));
+
+}}
+void div(string s){
+  int i=s.find(":");
+string header=s.substr(0,i);
+string value=s.substr(i+1);
+//std::cout << header << '\n';
+//std::cout << value << '\n';
+
+add_header(header ,value);}
+
+
+
+    void print()    {
+      for(auto& kv: m) {
+        std::cout << "KEY: `" << kv.first << "`, VALUE: `" << kv.second << '`' << std::endl;
+      }
+    }
+string get_v(string s){
+  map<string,string>::iterator it =m.find(s);
+  if(it!=m.end())return (it->second);
+}
+
+
+     };
 
 class Request{
 private:
@@ -42,27 +98,39 @@ string version;
 Headers h;
 //string data;
 public:
-void set (std::string l)
+void set (std::string l )
 {
   std::istringstream resp(l);
   resp >> method >> url >> version;
   h.set(l);
+
 }
+
+
 
 void print() {
   std::cout << "method: " << method << " url: " << url << " version: " << version << std::endl;
+  h.print();
+}
+void get(string s){
+cout<<h.get_v(s);
 }
 };
 
 int main(){
- const std::string s = "GET  /test.html Http/1.1\r\n"
+  string  s = "GET  /test.html Http/1.1\r\n"
     "Content-Type: image/jpeg; charset=utf-8\r\n"
-    "Test123: hi 123\r\n"
-    "Content-Length: 19912\r\n\r\n";
+    "Test: hi 123 \r\n"
+    "Content-Length: 2\r\n\r\n";
 Request r;
 r.set(s);
+//r.print();
+/*string l="Test: hi 124 135 \r\n"
+"Content-Length: 10\r\n";*/
+
 r.print();
 
+//r.get("Content-Length\n");
 
 
 return 0;}
