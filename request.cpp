@@ -49,23 +49,7 @@ void add_header(string header ,string value){
   }
 
 }
-void add_header(string header ,string value){
 
-  map<string,string>::iterator it =m.find(header);
-  if(it !=m.end()){
-  if(it->first=="Content-Length" ) it->second=value;
-  else
-
-  it->second=it->second+','+ value;
-
-}
-  else{
-    m.insert(std::make_pair(
-      boost::algorithm::trim_copy(header),
-      boost::algorithm::trim_copy(value)
-    ));
-
-}}
 void div(string s){
   int i=s.find(":");
 string header=s.substr(0,i);
@@ -84,7 +68,7 @@ add_header(header ,value);}
     }
 string get_v(string s){
   map<string,string>::iterator it =m.find(s);
-  if(it!=m.end())return (it->second);
+  if(it!=m.end())return (it->second);else return " ";
 }
 
 
@@ -106,7 +90,9 @@ void set (std::string l )
 
 }
 
-
+string get_value(string s){
+return (h.get_v(s));
+}
 
 void print() {
   std::cout << "method: " << method << " url: " << url << " version: " << version << std::endl;
@@ -128,7 +114,8 @@ r.set(s);
 /*string l="Test: hi 124 135 \r\n"
 "Content-Length: 10\r\n";*/
 
-r.print();
+//r.print();
+//cout<<"the value "<<r.get_value("Content-Length")<<"\n";
 
 //r.get("Content-Length\n");
 
